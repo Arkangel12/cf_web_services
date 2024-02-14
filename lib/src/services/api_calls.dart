@@ -2,13 +2,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cf_web_services/album.dart';
-import 'package:cf_web_services/user.dart';
+import 'package:cf_web_services/src/models/album.dart';
+import 'package:cf_web_services/src/models/user.dart';
 import 'package:http/http.dart' as http;
 
 Future<Album> fetchAlbum() async {
   final response = await http
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/6'));
 
   if (response.statusCode == 200) {
     return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
@@ -31,8 +31,8 @@ Future<List<Album>> fetchAlbums() async {
   }
 }
 
-Future<http.Response> createAlbum(String title) {
-  return http.post(
+Future<Album> createAlbum(String title) async {
+  final response = await http.post(
     Uri.parse('https://jsonplaceholder.typicode.com/albums'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -41,6 +41,14 @@ Future<http.Response> createAlbum(String title) {
       'title': title,
     }),
   );
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+  } else {
+    throw Exception('Failed to create album.');
+  }
 }
 
 Future<http.Response> updateAlbum(String title) {
@@ -76,13 +84,15 @@ Future<User> fetchUser() async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/users/1'));
 
   if (response.statusCode == 200) {
-    return User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    final user = User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    return user;
   } else {
     throw Exception('Failed to load user');
   }
 }
 
 Future<List<User>> fetchUsers() async {
+  print('Entre');
   final response = await http
       .get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
 

@@ -5,14 +5,14 @@ part 'album.g.dart';
 @JsonSerializable()
 class Album {
   //Example
-  //@JsonKey(name: 'user_id')
-  //@JsonKey(defaultValue: '1')
-  //@JsonKey(required: true)
+  // @JsonKey(name: 'user_id')
+  // @JsonKey(defaultValue: true)
+  // @JsonKey(required: true)
   final int userId;
   final int id;
   final String title;
 
-  Album({
+  const Album({
     required this.userId,
     required this.id,
     required this.title,
