@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cf_web_services/src/models/album.dart';
 import 'package:cf_web_services/src/models/user.dart';
@@ -92,7 +91,6 @@ Future<User> fetchUser() async {
 }
 
 Future<List<User>> fetchUsers() async {
-  print('Entre');
   final response = await http
       .get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
 

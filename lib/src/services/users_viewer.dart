@@ -29,10 +29,11 @@ class _UsersViewerState extends State<UsersViewer> {
         appBar: AppBar(
           title: const Text('Fetch Data Example'),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){setState(() {
-          print("hola");
-
-        });},),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {});
+          },
+        ),
         body: FutureBuilder<List<User>>(
           future: fetchUsers(),
           builder: (_, snapshot) {
@@ -47,7 +48,7 @@ class _UsersViewerState extends State<UsersViewer> {
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.brown.shade800,
-                        child:Text('${user.id}'),
+                        child: Text('${user.id}'),
                       ),
                       title: Text('${user.name} - ${user.website}'),
                       subtitle: Text(user.company.name.toUpperCase()),
